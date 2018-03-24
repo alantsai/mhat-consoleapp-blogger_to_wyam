@@ -32,6 +32,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var BlogPosts = posts.Select(x => x.ToBlogPostModel());
 
+            var toCshtmlBll = new BlogPostModelToCshtmlLogic();
+            Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+
             Console.WriteLine("完成");
         }
 

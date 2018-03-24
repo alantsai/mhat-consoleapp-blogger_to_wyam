@@ -37,6 +37,9 @@
     <Reference Include="MHAT.ConsoleApp.ProcessTemplate, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MHAT.ConsoleApp.ProcessTemplate.0.1.0.0\lib\net45\MHAT.ConsoleApp.ProcessTemplate.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bll\BlogPostModelToCshtmlLogic.cs" />
     <Compile Include="Bll\Helper\FeedEntryExtension.cs" />
     <Compile Include="Bll\Process\XmlBackupProcess.cs" />
     <Compile Include="Model\BlogImage.cs" />
@@ -59,6 +63,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Template\BlogPostTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
