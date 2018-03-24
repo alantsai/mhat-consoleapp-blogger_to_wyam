@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Bll\Process\XmlBackupProcess.cs" />
     <Compile Include="Model\XmlBackupProcessOption.cs" />
+    <Compile Include="Model\XmlExportModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
