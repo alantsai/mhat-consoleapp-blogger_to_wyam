@@ -8,6 +8,12 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
 {
     public class BlogPostModel
     {
+        public BlogPostModel()
+        {
+            Tags = new List<string>();
+            Images = new List<BlogImage>();
+        }
+
         public string Id { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
@@ -15,7 +21,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
         public DateTime ModifyDate { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public string Content { get; set; }
-        public IEnumerable<BlogImage> Images { get; set; }
+        public IList<BlogImage> Images { get; set; }
 
         public override string ToString()
         {
@@ -29,6 +35,15 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
             sb.AppendLine($"Tags: {string.Join(",", Tags)}");
 
             return sb.ToString();
+        }
+
+        public string ToStringWithContent()
+        {
+            var result = ToString() + Environment.NewLine + $"Content:{Content}";
+
+            result = result + Environment.NewLine + $"Images: {string.Join(",", Images.Select(x => x.OriginalUrl))}";
+
+            return result;
         }
     }
 }

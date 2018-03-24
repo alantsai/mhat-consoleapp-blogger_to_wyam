@@ -30,7 +30,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var post = posts.First();
 
-            Console.WriteLine(post.ToBlogPostModel());
+            Console.WriteLine(post.ToBlogPostModel().ToStringWithContent());
 
             Console.WriteLine("完成");
         }

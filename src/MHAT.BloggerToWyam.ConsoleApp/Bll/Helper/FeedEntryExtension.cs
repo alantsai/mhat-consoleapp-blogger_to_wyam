@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MHAT.BloggerToWyam.ConsoleApp.Model;
 
@@ -21,6 +22,18 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Helper
             result.ModifyDate = entry.updated;
             result.Tags = entry.category.Where(x => x.scheme.EndsWith("ns#")).Select(x => x.term).ToList();
             result.Url = link.href;
+            result.Content = entry.content.Value;
+
+            var regex = new Regex("src=([\"'])(.*?)\\1");
+            var matches = regex.Matches(result.Content);
+
+            foreach (Match item in matches)
+            {
+                result.Images.Add(new BlogImage()
+                {
+                    OriginalUrl = item.Groups[2].Value
+                });
+            }
 
             return result;
         }
