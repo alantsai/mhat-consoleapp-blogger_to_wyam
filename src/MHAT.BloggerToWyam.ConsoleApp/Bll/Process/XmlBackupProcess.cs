@@ -28,11 +28,18 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             // ShowAllPostInfo(posts);
 
+            // ShowFirstPostStrongModel(posts);
+
+            var BlogPosts = posts.Select(x => x.ToBlogPostModel());
+
+            Console.WriteLine("完成");
+        }
+
+        private static void ShowFirstPostStrongModel(IEnumerable<feedEntry> posts)
+        {
             var post = posts.First();
 
             Console.WriteLine(post.ToBlogPostModel().ToStringWithContent());
-
-            Console.WriteLine("完成");
         }
 
         private static void ShowAllPostInfo(IEnumerable<feedEntry> posts)
