@@ -25,18 +25,16 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var posts = feed.entry.Where(x => x.category.Any(y => y.scheme.EndsWith("kind") && y.term.EndsWith("post")));
 
-            var index = 1;
-            //foreach (var item in feed.entry)
-            //{
-            //    Console.WriteLine($"{index} - {item.published} - {item.category.First().term} - Title：{item.title.Value}");
+            ShowAllPostInfo(posts);
 
-            //    Console.WriteLine("------------");
+            Console.WriteLine("完成");
+        }
 
-            //    index++;
-            //}
-
+        private static void ShowAllPostInfo(IEnumerable<feedEntry> posts)
+        {
             Console.WriteLine($"總比數：{posts.Count()}");
 
+            var index = 1;
             index = 1;
             foreach (var item in posts)
             {
@@ -54,8 +52,6 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 Console.WriteLine($"{key.Key} - {key.Count()}");
                 Console.WriteLine("-------");
             }
-
-            Console.WriteLine("完成");
         }
     }
 }
