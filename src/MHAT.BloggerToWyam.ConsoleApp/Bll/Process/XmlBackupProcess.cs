@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using MHAT.BloggerToWyam.ConsoleApp.Bll.Helper;
 using MHAT.BloggerToWyam.ConsoleApp.Model;
 using MHAT.ConsoleApp.ProcessTemplate;
 
@@ -25,7 +26,11 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var posts = feed.entry.Where(x => x.category.Any(y => y.scheme.EndsWith("kind") && y.term.EndsWith("post")));
 
-            ShowAllPostInfo(posts);
+            // ShowAllPostInfo(posts);
+
+            var post = posts.First();
+
+            Console.WriteLine(post.ToBlogPostModel());
 
             Console.WriteLine("完成");
         }
