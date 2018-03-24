@@ -7,7 +7,7 @@ using CommandLine;
 
 namespace MHAT.BloggerToWyam.ConsoleApp.Model
 {
-    class XmlBackupProcessOption
+    public class XmlBackupProcessOption
     {
         [Option('p', Required = true, HelpText = "匯出的xml路徑")]
         public string BackupXmlPath { get; set; }
