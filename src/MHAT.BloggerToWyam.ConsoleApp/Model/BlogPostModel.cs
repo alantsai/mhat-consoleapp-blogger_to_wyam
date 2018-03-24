@@ -17,11 +17,20 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
         public string Id { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
+        public string UrlWithouDomain { get { return Url.TrimStart("http://blog.alantsai.net/".ToCharArray()); } }
         public DateTime PublishedDate { get; set; }
         public DateTime ModifyDate { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public string Content { get; set; }
         public IList<BlogImage> Images { get; set; }
+
+        public string NewFileName
+        {
+            get
+            {
+               return UrlWithouDomain.Replace("/", "-").Replace(".html", ".cshtml");
+            }
+        }
 
         public override string ToString()
         {

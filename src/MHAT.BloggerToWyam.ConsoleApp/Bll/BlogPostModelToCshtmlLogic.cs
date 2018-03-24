@@ -19,7 +19,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
             template = ReplaceTemplate(template, "PublishedDate", DateString(model.PublishedDate));
             template = ReplaceTemplate(template, "Modified", DateString(model.ModifyDate));
             template = ReplaceTemplate(template, "Tags", JsonConvert.SerializeObject(model.Tags));
-            template = ReplaceTemplate(template, "RedirectFrom", model.Url.TrimStart("http://blog.alantsai.net/".ToCharArray()));
+            template = ReplaceTemplate(template, "RedirectFrom", model.UrlWithouDomain);
 
             template = ReplaceTemplate(template, "Content", model.Content);
 
