@@ -20,6 +20,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
         protected override void Process()
         {
+            var takeoutImage = @"d:\Library\Downloads\blog\image\";
+            var postPath = @"d:\Library\Downloads\blog\post\";
+
             Console.WriteLine($"處理檔案：{ArugemntOption.BackupXmlPath}");
 
             XmlSerializer ser = new XmlSerializer(typeof(feed));
@@ -40,9 +43,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var imageProcessor = new ImageProcessor();
 
-            imageProcessor.PrepareImageDict(@"d:\Library\Downloads\blog\image\");
+            imageProcessor.PrepareImageDict(takeoutImage);
 
-            imageProcessor.ProcessImage(BlogPosts.First(), @"d:\Library\Downloads\blog\post\");
+            imageProcessor.ProcessImage(BlogPosts.First(), postPath);
 
             ProcessContentTag(BlogPosts.First());
 
