@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
             ProcessContentTag(BlogPosts.First());
 
             var toCshtmlBll = new BlogPostModelToCshtmlLogic();
-            Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+            // Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+
+            File.WriteAllText(Path.Combine(postPath, BlogPosts.First().NewFileName), toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
 
             Console.WriteLine("完成");
         }
