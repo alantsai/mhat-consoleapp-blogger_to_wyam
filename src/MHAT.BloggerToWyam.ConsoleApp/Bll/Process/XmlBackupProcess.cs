@@ -42,7 +42,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var imageProcessor = new ImageProcessor();
 
-            imageProcessor.PrepareImageDict(@"d:\Library\Downloads\temp\");
+            imageProcessor.PrepareImageDict(@"d:\Library\Downloads\blog\image\");
+
+            imageProcessor.DownloadImages(BlogPosts.First(), @"d:\Library\Downloads\blog\post\");
 
             Console.WriteLine("完成");
         }

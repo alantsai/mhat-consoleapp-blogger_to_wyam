@@ -31,15 +31,35 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
 
                 if (string.IsNullOrEmpty(model.url) == false)
                 {
-                    DownloadedImageDict.Add(model.url,
-                       Path.Combine(imageDirctory, allImageFiles.First(x => x.Contains(model.title))));
+                    var localFile = allImageFiles.FirstOrDefault(x => x.Contains(Path.GetFileNameWithoutExtension(file)));
+                    DownloadedImageDict.Add(model.url, localFile);
                 }
             }
         }
 
         public void DownloadImages(BlogPostModel model, string postPath)
         {
-            
+            var path = Path.Combine(postPath, model.NewFileName + "_Asset");
+
+            Directory.CreateDirectory(path);
+
+            foreach (var item in model.Images)
+            {
+                if(DownloadedImageDict.ContainsKey(item.OriginalUrl) == false)
+                {
+                    Console.WriteLine($"{item.OriginalUrl} 不存在");
+                }
+
+                var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrl.Substring(0, 59)));
+                var found = DownloadedImageDict[key];
+
+                var newFilePath = Path.Combine(path, Path.GetFileName(found));
+
+                if (File.Exists(newFilePath) == false)
+                {
+                    File.Copy(found, newFilePath);
+                }
+            }
         }
 
         internal void PrepareImageDict(object offLineImagePath)
