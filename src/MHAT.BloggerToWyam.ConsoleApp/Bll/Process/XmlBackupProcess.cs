@@ -35,16 +35,17 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             // ShowFirstPostStrongModel(posts);
 
-            var BlogPosts = posts.Select(x => x.ToBlogPostModel());
+            var BlogPosts = posts.Select(x => x.ToBlogPostModel()).ToList();
 
-            //var toCshtmlBll = new BlogPostModelToCshtmlLogic();
-            //Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
 
             var imageProcessor = new ImageProcessor();
 
             imageProcessor.PrepareImageDict(@"d:\Library\Downloads\blog\image\");
 
-            imageProcessor.DownloadImages(BlogPosts.First(), @"d:\Library\Downloads\blog\post\");
+            imageProcessor.ProcessImage(BlogPosts.First(), @"d:\Library\Downloads\blog\post\");
+
+            var toCshtmlBll = new BlogPostModelToCshtmlLogic();
+            Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
 
             Console.WriteLine("完成");
         }

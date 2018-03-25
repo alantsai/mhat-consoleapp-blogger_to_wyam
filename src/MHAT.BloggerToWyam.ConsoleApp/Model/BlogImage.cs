@@ -4,5 +4,6 @@
     {
         public string OriginalUrl { get; set; }
         public string SaveToPath { get; set; }
+        public string LocalPath { get; set; }
     }
 }

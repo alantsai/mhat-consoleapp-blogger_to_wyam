@@ -37,19 +37,34 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
             }
         }
 
+        public void ProcessImage(BlogPostModel model, string postPath)
+        {
+            DownloadImages(model, postPath);
+
+            ReplaceImageInContent(model);
+        }
+
+        private void ReplaceImageInContent(BlogPostModel model)
+        {
+            foreach (var item in model.Images)
+            {
+                model.Content = model.Content.Replace(item.OriginalUrl, item.LocalPath);
+            }
+        }
+
         public void DownloadImages(BlogPostModel model, string postPath)
         {
-            var path = Path.Combine(postPath, model.NewFileName + "_Asset");
+            var basePath = model.NewFileName + "_Asset";
+            var path = Path.Combine(postPath, basePath);
 
             Directory.CreateDirectory(path);
 
             foreach (var item in model.Images)
             {
-                if(DownloadedImageDict.ContainsKey(item.OriginalUrl) == false)
-                {
-                    Console.WriteLine($"{item.OriginalUrl} 不存在");
-                }
-
+                //if(DownloadedImageDict.ContainsKey(item.OriginalUrl) == false)
+                //{
+                //    Console.WriteLine($"{item.OriginalUrl} 不存在");
+                //}
                 var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrl.Substring(0, 59)));
                 var found = DownloadedImageDict[key];
 
@@ -59,6 +74,9 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
                 {
                     File.Copy(found, newFilePath);
                 }
+
+                item.SaveToPath = newFilePath;
+                item.LocalPath = Path.Combine(basePath, Path.GetFileName(found));
             }
         }
 
