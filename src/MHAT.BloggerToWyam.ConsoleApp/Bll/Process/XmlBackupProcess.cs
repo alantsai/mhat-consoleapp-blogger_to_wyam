@@ -44,6 +44,8 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             imageProcessor.ProcessImage(BlogPosts.First(), @"d:\Library\Downloads\blog\post\");
 
+            ProcessContentTag(BlogPosts.First());
+
             var toCshtmlBll = new BlogPostModelToCshtmlLogic();
             Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
 
@@ -79,6 +81,11 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 Console.WriteLine($"{key.Key} - {key.Count()}");
                 Console.WriteLine("-------");
             }
+        }
+
+        public void ProcessContentTag(BlogPostModel model)
+        {
+            model.Content = model.Content.Replace("http://blog.alantsai.net/search/label", "/tags");
         }
     }
 }
