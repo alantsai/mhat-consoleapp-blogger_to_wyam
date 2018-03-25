@@ -28,7 +28,8 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
         {
             get
             {
-               return UrlWithouDomain.Replace("/", "-").Replace(".html", ".cshtml");
+               return PublishedDate.ToString("yyyy-MM-dd") + "-" + 
+                    UrlWithouDomain.Replace("/", "-").Replace(".html", ".cshtml");
             }
         }
 
