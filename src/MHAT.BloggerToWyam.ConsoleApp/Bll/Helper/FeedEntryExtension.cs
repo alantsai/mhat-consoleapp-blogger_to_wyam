@@ -29,9 +29,16 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Helper
 
             foreach (Match item in matches)
             {
+                var value = item.Groups[2].Value;
+
+                if(value.Contains("google") == false)
+                {
+                    continue;
+                }
+
                 result.Images.Add(new BlogImage()
                 {
-                    OriginalUrl = item.Groups[2].Value
+                    OriginalUrl = value
                 });
             }
 

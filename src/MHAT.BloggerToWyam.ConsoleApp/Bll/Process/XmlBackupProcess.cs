@@ -41,19 +41,42 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var BlogPosts = posts.Select(x => x.ToBlogPostModel()).ToList();
 
-
             var imageProcessor = new ImageProcessor();
-
             imageProcessor.PrepareImageDict(takeoutImage);
 
-            imageProcessor.ProcessImage(BlogPosts.First(), postPath);
+            var index = 1;
 
-            ProcessContentTag(BlogPosts.First());
+            var wrongList = new List<BlogPostModel>();
 
-            var toCshtmlBll = new BlogPostModelToCshtmlLogic();
-            // Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+            foreach (var post in BlogPosts)
+            {
+                try
+                {
+                    imageProcessor.ProcessImage(post, postPath);
 
-            File.WriteAllText(Path.Combine(postPath, BlogPosts.First().NewFileName), toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+                    ProcessContentTag(post);
+
+                    var toCshtmlBll = new BlogPostModelToCshtmlLogic();
+                    // Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+
+                    File.WriteAllText(Path.Combine(postPath, post.NewFileName), toCshtmlBll.ToCshtmlTemplateString(post));
+
+                    Console.WriteLine($"{index}/{BlogPosts.Count} 完成: {post.Title}");
+
+                    index++;
+                }
+                catch (Exception ex)
+                {
+                    wrongList.Add(post);
+                }
+            }
+
+            Console.WriteLine("============");
+
+            foreach (var item in wrongList)
+            {
+                Console.WriteLine($"{item.Title} - 出錯");
+            }
 
             Console.WriteLine("完成");
         }
