@@ -13,6 +13,11 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 {
     public class XmlBackupProcess : BaseExecuteProcessTemplate<XmlBackupProcessOption>
     {
+        protected override void PreProcess()
+        {
+            base.PreProcess();
+        }
+
         protected override void Process()
         {
             Console.WriteLine($"處理檔案：{ArugemntOption.BackupXmlPath}");
@@ -32,8 +37,12 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var BlogPosts = posts.Select(x => x.ToBlogPostModel());
 
-            var toCshtmlBll = new BlogPostModelToCshtmlLogic();
-            Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+            //var toCshtmlBll = new BlogPostModelToCshtmlLogic();
+            //Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
+
+            var imageProcessor = new ImageProcessor();
+
+            imageProcessor.PrepareImageDict(@"d:\Library\Downloads\temp\");
 
             Console.WriteLine("完成");
         }

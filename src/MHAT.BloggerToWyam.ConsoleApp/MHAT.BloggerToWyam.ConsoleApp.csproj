@@ -52,9 +52,11 @@
   <ItemGroup>
     <Compile Include="Bll\BlogPostModelToCshtmlLogic.cs" />
     <Compile Include="Bll\Helper\FeedEntryExtension.cs" />
+    <Compile Include="Bll\ImageProcessor.cs" />
     <Compile Include="Bll\Process\XmlBackupProcess.cs" />
     <Compile Include="Model\BlogImage.cs" />
     <Compile Include="Model\BlogPostModel.cs" />
+    <Compile Include="Model\ImageMeta.cs" />
     <Compile Include="Model\XmlBackupProcessOption.cs" />
     <Compile Include="Model\XmlExportModel.cs" />
     <Compile Include="Program.cs" />
