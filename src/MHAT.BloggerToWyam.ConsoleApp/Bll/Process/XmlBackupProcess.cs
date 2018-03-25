@@ -56,6 +56,8 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
                     ProcessContentTag(post);
 
+                    post.Content = post.Content.Replace("@", "@@");
+
                     var toCshtmlBll = new BlogPostModelToCshtmlLogic();
                     // Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
 
