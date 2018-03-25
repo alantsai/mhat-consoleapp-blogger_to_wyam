@@ -54,7 +54,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
 
         public void DownloadImages(BlogPostModel model, string postPath)
         {
-            var basePath = model.NewFileName + "_Asset";
+            var basePath = Path.GetFileNameWithoutExtension(model.NewFileName) + "_Asset";
             var path = Path.Combine(postPath, basePath);
 
             Directory.CreateDirectory(path);
