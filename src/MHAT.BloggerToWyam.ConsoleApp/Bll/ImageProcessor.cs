@@ -54,29 +54,32 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
 
         public void DownloadImages(BlogPostModel model, string postPath)
         {
-            var basePath = Path.GetFileNameWithoutExtension(model.NewFileName) + "_Asset";
-            var path = Path.Combine(postPath, basePath);
-
-            Directory.CreateDirectory(path);
-
-            foreach (var item in model.Images)
+            if (model.Images.Count > 0)
             {
-                //if(DownloadedImageDict.ContainsKey(item.OriginalUrl) == false)
-                //{
-                //    Console.WriteLine($"{item.OriginalUrl} 不存在");
-                //}
-                var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrl.Substring(0, 59)));
-                var found = DownloadedImageDict[key];
+                var basePath = Path.GetFileNameWithoutExtension(model.NewFileName) + "_Asset";
+                var path = Path.Combine(postPath, basePath);
 
-                var newFilePath = Path.Combine(path, Path.GetFileName(found));
+                Directory.CreateDirectory(path);
 
-                if (File.Exists(newFilePath) == false)
+                foreach (var item in model.Images)
                 {
-                    File.Copy(found, newFilePath);
-                }
+                    //if(DownloadedImageDict.ContainsKey(item.OriginalUrl) == false)
+                    //{
+                    //    Console.WriteLine($"{item.OriginalUrl} 不存在");
+                    //}
+                    var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrl.Substring(0, 59)));
+                    var found = DownloadedImageDict[key];
 
-                item.SaveToPath = newFilePath;
-                item.LocalPath = Path.Combine(basePath, Path.GetFileName(found));
+                    var newFilePath = Path.Combine(path, Path.GetFileName(found));
+
+                    if (File.Exists(newFilePath) == false)
+                    {
+                        File.Copy(found, newFilePath);
+                    }
+
+                    item.SaveToPath = newFilePath;
+                    item.LocalPath = Path.Combine(basePath, Path.GetFileName(found));
+                }
             }
         }
 

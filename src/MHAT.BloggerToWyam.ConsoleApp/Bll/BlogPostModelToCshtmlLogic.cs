@@ -20,7 +20,11 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
             template = ReplaceTemplate(template, "Modified", DateString(model.ModifyDate));
             template = ReplaceTemplate(template, "Tags", JsonConvert.SerializeObject(model.Tags));
             template = ReplaceTemplate(template, "RedirectFrom", model.UrlWithouDomain);
-            template = ReplaceTemplate(template, "Image", model.Images.First().LocalPath.Replace("\\", "/"));
+
+            if (model.Images.Count > 0)
+            {
+                template = ReplaceTemplate(template, "Image", model.Images.First().LocalPath.Replace("\\", "/"));
+            }
 
             template = ReplaceTemplate(template, "Content", model.Content);
 
