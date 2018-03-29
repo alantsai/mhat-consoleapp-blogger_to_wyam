@@ -21,6 +21,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
         public DateTime PublishedDate { get; set; }
         public DateTime ModifyDate { get; set; }
         public IEnumerable<string> Tags { get; set; }
+        public IEnumerable<string> Series { get { return Tags.Where(x => x.StartsWith("「")); } }
         public string Content { get; set; }
         public IList<BlogImage> Images { get; set; }
 
