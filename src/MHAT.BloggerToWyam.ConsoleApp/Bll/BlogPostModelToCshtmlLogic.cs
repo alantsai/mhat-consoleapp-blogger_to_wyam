@@ -26,6 +26,10 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
             {
                 template = ReplaceTemplate(template, "Image", model.Images.First().LocalPath.Replace("\\", "/"));
             }
+            else
+            {
+                template = ReplaceTemplate(template, "Image", "\"\"");
+            }
 
             template = ReplaceTemplate(template, "Content", model.Content);
 
