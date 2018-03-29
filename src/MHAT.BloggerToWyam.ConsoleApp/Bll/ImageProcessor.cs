@@ -67,7 +67,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
                     //{
                     //    Console.WriteLine($"{item.OriginalUrl} 不存在");
                     //}
-                    var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrl.Substring(0, 59)));
+                    var key = DownloadedImageDict.Keys.FirstOrDefault(x => x.StartsWith(item.OriginalUrlWithDomainFix.Substring(0, 59)));
                     var found = DownloadedImageDict[key];
 
                     var newFilePath = Path.Combine(path, Path.GetFileName(found));

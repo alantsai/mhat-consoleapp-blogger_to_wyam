@@ -31,7 +31,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Helper
             {
                 var value = item.Groups[2].Value;
 
-                if(value.Contains("google") == false)
+                if((value.Contains("google") || value.Contains("ggpht")) == false)
                 {
                     continue;
                 }
