@@ -48,7 +48,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
         {
             foreach (var item in model.Images)
             {
-                model.Content = model.Content.Replace(item.OriginalUrl, item.LocalPath);
+                model.Content = model.Content.Replace(item.OriginalUrl, item.WyamAbsolutePath);
             }
         }
 

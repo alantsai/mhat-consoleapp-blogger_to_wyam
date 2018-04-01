@@ -16,5 +16,6 @@
         }
         public string SaveToPath { get; set; }
         public string LocalPath { get; set; }
+        public string WyamAbsolutePath { get { return $"/posts/migrate/{LocalPath.Replace("\\", "/")}"; } }
     }
 }
