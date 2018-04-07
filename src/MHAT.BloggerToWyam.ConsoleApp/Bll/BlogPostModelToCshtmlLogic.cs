@@ -24,7 +24,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll
 
             if (model.Images.Count > 0)
             {
-                template = ReplaceTemplate(template, "Image", model.Images.First().LocalPath.Replace("\\", "/"));
+                template = ReplaceTemplate(template, "Image", model.Images.First().WyamAbsolutePath.Replace("\\", "/"));
             }
             else
             {
