@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -94,6 +95,37 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
             var document = parser.Parse(post.Content);
 
             AddImageClassResponsive(document);
+
+            var pres = document.QuerySelectorAll("pre");
+
+            foreach (var pre in pres)
+            {
+                var regex = @"brush\:\s([a-zA-z]+)";
+
+                var match = Regex.Match(pre.ClassName, regex);
+                var brushName = match.Groups[1];
+
+                // 預設使用 和brush名稱一樣
+                var newlanguageName = brushName.Value;
+
+                switch (brushName.Value)
+                {
+                    case "c-sharp":
+                        newlanguageName = "csharp";
+                        break;
+                    case "plain":
+                        newlanguageName = "nohighlight";
+                        break;
+                }
+
+                var code = document.CreateElement("code");
+                code.ClassList.Add("language-" + newlanguageName);
+
+                code.InnerHtml = pre.InnerHtml.Replace("<br />", Environment.NewLine)
+                    .Replace("<br>", Environment.NewLine);
+                pre.InnerHtml = string.Empty;
+                pre.AppendChild(code);
+            }
 
             post.Content = document.QuerySelector("body").InnerHtml;
         }
