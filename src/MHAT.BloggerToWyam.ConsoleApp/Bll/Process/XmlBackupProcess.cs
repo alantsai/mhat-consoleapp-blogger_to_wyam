@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using AngleSharp.Parser.Html;
+using AngleSharp.XHtml;
 using MHAT.BloggerToWyam.ConsoleApp.Bll.Helper;
 using MHAT.BloggerToWyam.ConsoleApp.Model;
 using MHAT.ConsoleApp.ProcessTemplate;
@@ -55,8 +57,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                     imageProcessor.ProcessImage(post, postPath);
 
                     ProcessContentTag(post);
-
-                    post.Content = post.Content.Replace("@", "@@");
+                    ProcessContent(post);
 
                     var toCshtmlBll = new BlogPostModelToCshtmlLogic();
                     // Console.WriteLine(toCshtmlBll.ToCshtmlTemplateString(BlogPosts.First()));
@@ -81,6 +82,12 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
             }
 
             Console.WriteLine("完成");
+        }
+
+        private static void ProcessContent(BlogPostModel post)
+        {
+            // Razor需要escape @
+            post.Content = post.Content.Replace("@", "@@");
         }
 
         private static void ShowFirstPostStrongModel(IEnumerable<feedEntry> posts)
