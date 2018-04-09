@@ -88,6 +88,24 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
         {
             // Razor需要escape @
             post.Content = post.Content.Replace("@", "@@");
+
+            var parser = new HtmlParser();
+
+            var document = parser.Parse(post.Content);
+
+            AddImageClassResponsive(document);
+
+            post.Content = document.QuerySelector("body").InnerHtml;
+        }
+
+        private static void AddImageClassResponsive(AngleSharp.Dom.Html.IHtmlDocument document)
+        {
+            var imgs = document.QuerySelectorAll("img");
+
+            foreach (var img in imgs)
+            {
+                img.ClassList.Add("img-responsive");
+            }
         }
 
         private static void ShowFirstPostStrongModel(IEnumerable<feedEntry> posts)
