@@ -111,14 +111,30 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 switch (brushName.Value)
                 {
                     case "c-sharp":
+                    case "csharp":
                         newlanguageName = "csharp";
                         break;
+                    case "ps":
+                    case "powershell":
+                        newlanguageName = "powershell";
+                        break;
+                    case "jscript":
+                    case "js":
+                        newlanguageName = "javascript";
+                        break;
+                    case "xml":
+                    case "xhtml":
+                    case "xslt":
+                    case "html":
+                        newlanguageName = "markup";
+                        break;
                     case "plain":
-                        newlanguageName = "nohighlight";
+                        newlanguageName = "none";
                         break;
                 }
 
                 var code = document.CreateElement("code");
+
                 code.ClassList.Add("language-" + newlanguageName);
 
                 code.InnerHtml = pre.InnerHtml.Replace("<br />", Environment.NewLine)
