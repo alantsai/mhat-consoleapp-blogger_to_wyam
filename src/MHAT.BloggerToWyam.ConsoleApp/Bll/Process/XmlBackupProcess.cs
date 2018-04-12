@@ -136,6 +136,8 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 var code = document.CreateElement("code");
 
                 code.ClassList.Add("language-" + newlanguageName);
+                // prism.js line number class
+                code.ClassList.Add("line-numbers");
 
                 code.InnerHtml = pre.InnerHtml.Replace("<br />", Environment.NewLine)
                     .Replace("<br>", Environment.NewLine);
