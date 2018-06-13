@@ -82,6 +82,20 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 Console.WriteLine($"{item.Title} - 出錯");
             }
 
+            Console.WriteLine("==============");
+
+            foreach (var post in BlogPosts)
+            {
+                var postUrlWithoutExtension = post.UrlWithouDomain.Substring(0, post.UrlWithouDomain.LastIndexOf("."));
+
+                var template = @"<b:elseif cond='data:blog.canonicalUrl == ""http://.blogspot.com/" + post.UrlWithouDomain + "\"'/>"  +
+                                    @"<link rel=""canonical"" href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>" +
+                                    @"<meta http-equiv=""refresh"" content=""0; url=href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>";
+
+                Console.WriteLine(template);
+                Console.WriteLine();
+            }
+
             Console.WriteLine("完成");
         }
 
