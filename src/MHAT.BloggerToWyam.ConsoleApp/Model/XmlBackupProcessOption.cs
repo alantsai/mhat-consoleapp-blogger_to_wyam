@@ -9,10 +9,13 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Model
 {
     public class XmlBackupProcessOption
     {
-        [Option('p', Required = false, HelpText = "匯出的xml路徑")]
+        [Option('p', HelpText = "匯出的xml路徑", DefaultValue = @"d:\Library\Downloads\blog-03-22-2018.xml")]
         public string BackupXmlPath { get; set; }
 
-        //[Option('o', Required = false, HelpText = "已經下載的圖片位置")]
-        //public string OffLineImagePath { get; internal set; }
+        [Option('i', HelpText = "已經下載的圖片位置", DefaultValue = @"d:\Library\Downloads\blog\image\")]
+        public string OffLineImagePath { get; set; }
+
+        [Option('o', HelpText = "最後輸出的位置", DefaultValue = @"d:\Library\Downloads\blog\post\")]
+        public string FinalOutputPostPath { get; set; }
     }
 }
