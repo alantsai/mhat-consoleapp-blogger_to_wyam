@@ -1,87 +1,73 @@
-﻿# mhat-common-boilerplate-repo
+﻿# mhat-consoleapp-blogger_to_wyam
 
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/alantsai/mhat-common-boilerplate-repo?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+這個專案提供一個以C# sample的console程式用作與處理Google Blogspot（Blogger）匯出文章的xml，
+方便搬遷部落格到別的平臺。
 
-這個專案的目的是提供一個template，方便建立新專案的時候，包含需要的最基本資訊。
+主要提供兩個部分的處理：
+1. 把文章轉換成爲chstml，并且處理幾個部分
+    - 圖片位置從本來連到google photo改成local的位置
+    - 處理tag標簽的網址
+    - 把js高亮的套件從syntachighlighter改成prismjs
+2. 產生出放在blogger的xml内容，方便seo用途
 
-每一個資料夾或者檔案的作用詳細說明可以參考我的部落格[該怎麼開專案的資料夾結構？每個專案應該要有的資料夾結構和檔案](http://to.alantsai.net/20170723-blog-github)
-
-在使用的時候，quote (>作為開頭的文字)都可以刪掉，那些是說明用途。
-
-> 這個部分的內容主要簡短介紹這個專案的目的。有些時候會在這個部分放上一些標章（例如建制情況等）和專案的logo。
-
-## 安裝 (install)
-
-這個專案並無安裝的前置條件
-
-> 這個部分寫的是開始使用的前置條件 - 例如用`npm`或者`nuget`安裝的指令。
+詳細可以參考我的部落格系列：[部落格改版學DevOps](http://blog.alantsai.net/tags/%E3%80%8C%E9%83%A8%E8%90%BD%E6%A0%BC%E6%94%B9%E7%89%88%E5%AD%B8devops%E3%80%8D)
+裡面的實際搬遷篇
 
 ## 快速使用 (getting started)
 
-使用這個專案有兩種模式：  
-1. 不包含這個專案的歷史記錄
-2. 包含這個專案的歷史記錄
+目前這個專案屬於sample程式碼，因此會需要自己手動clone下來透過visual studio執行（如果有人有需要編譯過的版本可以直接使用
+請發issue或者在部落格留言給我）
 
-### 不包含這個專案的歷史記錄
+### 直接使用
 
-可以直接下載最新版本的zip檔案：
+把solution build之後，透過command line的方式傳入三個參數：
+1. `-p`: 從blogger匯出的xml路徑
+2. `-i`: 從google photo備份的圖片路徑
+3. `-o`: 最後產出的cshtml路徑
 
-[下載最新的zip](https://github.com/alantsai/mhat-common-boilerplate-repo/archive/master.zip)
-
-或者可以 ：
-
-1. clone專案
-2. 刪除.git資料夾
-3. 重新git init（新的版控記錄）
-
-Powershell指令來說就是：
-
+例如：
 ```powershell
-git clone https://github.com/alantsai/mhat-common-boilerplate-repo.git
-cd mhat-common-boilerplate-repo
-rm .git -Recurse -Force
-git init
-git add -A
-git commit -m "init project"
+.\MHAT.BloggerToWyam.ConsoleApp.exe -p "d:\Library\Downloads\blog-03-22-2018.xml" -i "d:\Library\Downloads\blog\
+image\" -o "d:\Library\Downloads\blog\post\"
 ```
 
-### 包含這個專案的歷史記錄
+### 主要程式碼調整位置
 
-操作步驟
+這個軟體的主要邏輯流程在：[Bll/Process/XmlBackupProcess.cs](/src/MHAT.BloggerToWyam.ConsoleApp/Bll\Process\XmlBackupProcess.cs)
 
-1. clone專案
-2. 刪掉origin的位置
-3. 調整origin到新的位置
+整個程式碼的流程應該看就能夠懂，不過大概做以下幾個事情：
+1. 把blogger匯出的xml反序列化成爲物件
+2. 取得是文章的部分
+3. 針對每一個文章
+    - 處理圖片
+    - 處理tag網址
+    - 處理語法高亮（syntax highlight）從本來的syntaxhighlighter改成prismjs
+4. 匯出產出的cshtml以及圖片
+5. 在console印出應該放在blogger的xml内容
 
-```powershell
-git clone https://github.com/alantsai/mhat-common-boilerplate-repo.git
-cd mhat-common-boilerplate-repo
-git remote rm origin
-git remote add origin {new repo url}
-```
+整個的Console產出有3個部分：
+1. 那些處理完成
+2. 那些處理失敗
+3. 應該放在blogger作爲seo的xml内容
 
-> 這個部分告訴大家如何開始使用你的這個專案。一般來說提供一個hello world範例之後，會提供鏈接到詳細的doc說明。
+每一個區域以多個等號（`========`）區隔，一個沒問題的範例截圖如下，可以看到處理失敗的部分是空
+
+![產出返利](/docs/assets/output-with-no-error.png)
+
+### 注意事項
+
+假設有出現錯誤，最有可能的原因是因爲圖片domain導致。在google的圖片網址的subdomain都不一樣，程式裡面有透過一個
+dictionary把他們都一致化，但是還是有可能有些沒處理到，可以參考 [Model/BlogImage.cs](/src/MHAT.BloggerToWyam.ConsoleApp/Model/BlogImage.cs)
+裡面的`OriginalUrlWithDomainFix`
 
 ## 幫助 (support)
 
-如果有任何問題，可以透過[開issue](https://github.com/alantsai/mhat-common-boilerplate-repo/issues/new) 或者 可以在 [gitter](https://gitter.im/alantsai/mhat-common-boilerplate-repo?utm_source=share-link&utm_medium=link&utm_campaign=share-link)上面發問。
+如果有任何問題，可以透過[開issue](https://github.com/alantsai/mhat-consoleapp-blogger_to_wyam/issues/new)。
 
 ## 參與修改 (Contributing)
 
 歡迎任何形式的參與，更多資訊請參考  
 [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 貢獻者 (Contributors)
-
-> 如果有任何要感謝的貢獻者，可以專門寫到 `CONTRIBUTORS.md` 檔案，或者直接在這個檔案裡面列出來。
-
-## 作者 (Authors)
-
-> 假設需要列出專案的作者（和版權有關），那麼可以列在 `AUTHORS.md` 裡面。
-
-## 感謝 (Acknowledgements)
-
-> 如果專案有使用到一些第三方的library或者一些資源想要感謝可以卸載這裡，或者如果內容比較多可以列在 `ACKNOWLEDGMENTS.md` 裡面。
 
 ## 授權 (License)
 

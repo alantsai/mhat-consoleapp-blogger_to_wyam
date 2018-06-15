@@ -24,8 +24,8 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
         protected override void Process()
         {
-            var takeoutImage = @"d:\Library\Downloads\blog\image\";
-            var postPath = @"d:\Library\Downloads\blog\post\";
+            var takeoutImage = ArugemntOption.OffLineImagePath;
+            var postPath = ArugemntOption.FinalOutputPostPath;
 
             Console.WriteLine($"處理檔案：{ArugemntOption.BackupXmlPath}");
 
@@ -36,6 +36,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
                 feed = (feed)ser.Deserialize(reader);
             }
 
+            // 取得文章
             var posts = feed.entry.Where(x => x.category.Any(y => y.scheme.EndsWith("kind") && y.term.EndsWith("post")));
 
             // ShowAllPostInfo(posts);
@@ -51,6 +52,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             var wrongList = new List<BlogPostModel>();
 
+            // 處理每一個文章
             foreach (var post in BlogPosts)
             {
                 try
@@ -84,6 +86,7 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
 
             Console.WriteLine("==============");
 
+            // 列印出應該放在blogger的xml内容
             foreach (var post in BlogPosts)
             {
                 var postUrlWithoutExtension = post.UrlWithouDomain.Substring(0, post.UrlWithouDomain.LastIndexOf("."));
