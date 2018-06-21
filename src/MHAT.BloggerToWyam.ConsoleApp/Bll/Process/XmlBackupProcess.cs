@@ -91,9 +91,12 @@ namespace MHAT.BloggerToWyam.ConsoleApp.Bll.Process
             {
                 var postUrlWithoutExtension = post.UrlWithouDomain.Substring(0, post.UrlWithouDomain.LastIndexOf("."));
 
-                var template = @"<b:elseif cond='data:blog.canonicalUrl == ""http://.blogspot.com/" + post.UrlWithouDomain + "\"'/>"  +
-                                    @"<link rel=""canonical"" href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>" +
-                                    @"<meta http-equiv=""refresh"" content=""0; url=href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>";
+                // 修改blogger的名稱為自己的
+                var bloggerName = "alantsai2007";
+                var template = @"<b:if cond='data:blog.canonicalUrl == ""http://" + bloggerName + ".blogspot.com/" + post.UrlWithouDomain + "\"'/>" +
+                                    @"<link rel=""canonical"" href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>";
+                                    // 如果要自動跳轉，加入下面那行
+                                    //@"<meta http-equiv=""refresh"" content=""0; url=href=""http://blog.alantsai.net/posts/" + postUrlWithoutExtension + "\"/>"
 
                 Console.WriteLine(template);
                 Console.WriteLine();
